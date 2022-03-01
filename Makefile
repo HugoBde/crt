@@ -1,7 +1,7 @@
 CC = clang
 LIBS =
 INCLUDES =
-FLAGS = -Wall -Wextra -Werror -ansi
+FLAGS = -Wall -Wextra -Werror
 BIN = bin/ray_tracer
 OBJS = obj/main.o
 
