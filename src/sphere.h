@@ -3,13 +3,13 @@
 
 /**
  * @brief Represents a single sphere
- * 
+ *
  */
 typedef struct {
-    float radius;
-    float x;
-    float y;
-    float z;
+  float radius;
+  float x;
+  float y;
+  float z;
 } sphere_t;
 
 #endif

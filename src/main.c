@@ -4,83 +4,59 @@
  * @brief Small real-time ray tracer made for demonstration purposes for Fundamentals of C Programming 48430 @ University of Technolgy Sydney
  * @version 0.1
  * @date 2022-03-01
- * 
+ *
  * @copyright Copyright (c) 2022
- * 
+ *
  */
 
-#include <errno.h>
-#include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
-#include "sphere.h"
 #include "scene.h"
+#include "sphere.h"
 #include "utils.h"
 
+scene_t g_scene;
 
-scene_t init(int argc, char* argv[]);
-
+void init(int argc, char* argv[]);
+void clean_up();
 
 int main(int argc, char* argv[]) {
+  // INIT
+  init(argc, argv);
 
-    // INIT
-    scene_t scene = init(argc, argv);
+  // RUN
+  // render(&scene);
 
-    // RUN
-    //render(&scene);
+  // CLEAN UP
+  clean_up();
 
-    // CLEAN UP
-    scene_cleanup(&scene);
-    print_success("Completed clean up");
-    return 0;
+  return 0;
 }
 
-scene_t init(int argc, char* argv[]) {
-    //bool live_rendering = false;
+void init(int argc, char* argv[]) {
+  parse_command_line(argc, argv);
 
-    if (argc < 2) {
-        print_error("usage: ./bin/ray_tracer <config file> [-l]");
-        exit(EINVAL);
-    }
+  FILE* config_file = fopen(g_config_filename, "r");
+  if (config_file == NULL) {
+    print_error("config could not be opened");
+    exit(1);
+  }
 
-    if (argc == 3) {
-        if (strcmp(argv[2], "-l")) {
-            print_error("usage: ./bin/ray_tracer <config file> [-l]");
-            exit(EINVAL);
-        } else {
-            print_error("-l: live rendering is not supported yet");
-            //live_rendering = true;
-            exit(1);
-        }
-    }
+  parse_config(config_file, &g_scene);
+  print_success("Parsed config file");
 
-    FILE* config_file = fopen(argv[1], "r");
-    if (config_file == NULL) {
-        print_error("config could not be opened");
-        exit(1);
-    }
+  if (fclose(config_file)) {
+    print_error("failed to close config file");
+  }
 
-    scene_t scene;
+  if (g_live_rendering_on) {
+    // Init SDL2
+  }
+}
 
-    errno = 0;
-    parse_config(config_file, &scene);
-
-    if (errno != 0) {
-        switch (errno) {
-            case 1:
-            print_error("failed to initialise scene");
-            default:
-            print_error("failed to parse config file");
-        }
-        exit(1);
-    }
-    print_success("Parsed config file");
-    
-    if (fclose(config_file)) {
-        print_error("failed to close config file");
-    }
-
-    return scene;
+void clean_up() {
+  scene_cleanup(&g_scene);
+  // clean up SDL
+  print_success("Completed clean up");
 }
