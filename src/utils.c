@@ -31,11 +31,14 @@ void print_success(char* message) {
  * @param argc Number of arguments provided
  * @param argv Array of arguments provided
  */
-void parse_command_line(int argc, char* argv[]) {
+void parse_command_line(int argc, char* argv[], config_t* config) {
   if (argc < 2) {
     print_error("usage: ./bin/ray_tracer <config file> [-l]");
     exit(EINVAL);
   }
+
+  config->config_filename = argv[1];
+  config->live_rendering_on = false;
 
   if (argc == 3) {
     if (strcmp(argv[2], "-l")) {
@@ -43,7 +46,7 @@ void parse_command_line(int argc, char* argv[]) {
       exit(EINVAL);
     } else {
       print_error("-l: live rendering is not supported yet");
-      // live_rendering = true;
+      config->live_rendering_on = true;
       exit(1);
     }
   }

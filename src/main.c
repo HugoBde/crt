@@ -12,18 +12,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "utils.h"
 #include "scene.h"
 #include "sphere.h"
-#include "utils.h"
 
 scene_t g_scene;
 
-void init(int argc, char* argv[]);
+void init(int argc, char* argv[], config_t* config);
 void clean_up();
 
 int main(int argc, char* argv[]) {
+  config_t config;
   // INIT
-  init(argc, argv);
+  init(argc, argv, &config);
 
   // RUN
   // render(&scene);
@@ -34,10 +35,10 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 
-void init(int argc, char* argv[]) {
-  parse_command_line(argc, argv);
+void init(int argc, char* argv[], config_t* config) {
+  parse_command_line(argc, argv, config);
 
-  FILE* config_file = fopen(g_config_filename, "r");
+  FILE* config_file = fopen(config->config_filename, "r");
   if (config_file == NULL) {
     print_error("config could not be opened");
     exit(1);
@@ -50,7 +51,7 @@ void init(int argc, char* argv[]) {
     print_error("failed to close config file");
   }
 
-  if (g_live_rendering_on) {
+  if (config->live_rendering_on) {
     // Init SDL2
   }
 }

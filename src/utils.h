@@ -5,16 +5,13 @@
 #include <stddef.h>
 
 /**
- * @brief filename of config file
- *
+ * @brief Various configuration option
+ * 
  */
-char* g_config_filename = NULL;
-
-/**
- * @brief whether program is running in live rendering with SDL
- *
- */
-bool g_live_rendering_on = false;
+typedef struct {
+  char* config_filename;
+  bool live_rendering_on;
+} config_t;
 
 /**
  * @brief Log error with colour coding
@@ -36,6 +33,6 @@ void print_success(char* message);
  * @param argc Number of arguments provided
  * @param argv Array of arguments provided
  */
-void parse_command_line(int argc, char* argv[]);
+void parse_command_line(int argc, char* argv[], config_t* config);
 
 #endif
