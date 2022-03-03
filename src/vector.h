@@ -26,6 +26,15 @@ vector_t add(vector_t v, vector_t u);
 vector_t sub(vector_t v, vector_t u);
 
 /**
+ * @brief Multiply a vector by a factor k
+ * 
+ * @param v Vector 
+ * @param k Factor
+ * @return vector_t Product of V and K 
+ */
+vector_t scalar_multiply(vector_t v, float k);
+
+/**
  * @brief Dot product of two vectors
  * 
  * @param v Vector 1

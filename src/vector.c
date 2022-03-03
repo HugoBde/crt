@@ -33,6 +33,21 @@ vector_t sub(vector_t v, vector_t u) {
 }
 
 /**
+ * @brief Multiply a vector by a factor k
+ * 
+ * @param v Vector 
+ * @param k Factor
+ * @return vector_t Product of V and K 
+ */
+vector_t scalar_multiply(vector_t v, float k) {
+  vector_t out;
+  out.x = v.x * k;
+  out.y = v.y * k;
+  out.z = v.z * k;
+  return out;
+}
+
+/**
  * @brief Dot product of two vectors
  * 
  * @param v Vector 1
