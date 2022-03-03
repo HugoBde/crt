@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 
+#include "colour.h"
 #include "sphere.h"
 
 /**
@@ -12,6 +13,10 @@
 typedef struct {
   int nb_sphere;
   sphere_t* spheres;
+  int width;
+  int height;
+  char filename[128];
+  colour_t* buffer;
 } scene_t;
 
 /**
