@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "utils.h"
 #include "scene.h"
 #include "sphere.h"
+#include "utils.h"
 
 scene_t g_scene;
 
