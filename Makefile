@@ -10,10 +10,10 @@ all: $(BIN)
 $(BIN): $(OBJS)
 	$(CC) $^ -o $@ $(FLAGS) $(LIBS)
 
-obj/main.o:   src/main.c   src/scene.h  src/sphere.h src/sphere.h src/utils.h
+obj/main.o:   src/main.c                 src/scene.h  src/sphere.h src/utils.h
 obj/utils.o:  src/utils.c  src/utils.h
-obj/scene.o:  src/scene.c  src/scene.h  src/sphere.h src/utils.h
-obj/sphere.o: src/sphere.c src/sphere.h
+obj/scene.o:  src/scene.c  src/scene.h   src/utils.h
+obj/sphere.o: src/sphere.c src/sphere.h  src/vector.h
 obj/vector.o: src/vector.c src/vector.h
 
 $(OBJS):
