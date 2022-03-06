@@ -51,3 +51,39 @@ void parse_command_line(int argc, char* argv[], config_t* config) {
     }
   }
 }
+
+/**
+ * @brief Write image buffer to ppm file
+ * 
+ * @param buffer image buffer 
+ * @param scene scene config containing image size and output filename
+ */
+void write_buffer_to_file(colour_t* image_buffer, scene_t scene) {
+  FILE* output_file = fopen(scene.filename, "w");
+  if (output_file == NULL) {
+    print_error("could not open output file");
+    return;
+  }
+
+  // File header data:
+  // P6
+  // <width> <height>
+  // <max value for colour>
+  fprintf(output_file, "P6\n%d %d\n255\n", scene.width, scene.height);
+
+  char* write_buffer = (char*) malloc(sizeof(char) * scene.width * scene.height * 3);
+  for (int i = 0; i < scene.height; i++) {
+    int height_offset = i * scene.width;
+    for (int j = 0; j < scene.width; j++) {
+      write_buffer[(height_offset + j) * 3 + 0] = image_buffer[height_offset + j].r;
+      write_buffer[(height_offset + j) * 3 + 1] = image_buffer[height_offset + j].g;
+      write_buffer[(height_offset + j) * 3 + 2] = image_buffer[height_offset + j].b;
+    }
+  }
+  fwrite(write_buffer, sizeof(char), scene.height * scene.width * 3, output_file);
+  free(write_buffer);
+
+
+
+  fclose(output_file);
+}

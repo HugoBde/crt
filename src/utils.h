@@ -4,6 +4,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#include "colour.h"
+#include "scene.h"
+
 /**
  * @brief Various configuration option
  * 
@@ -34,5 +37,13 @@ void print_success(char* message);
  * @param argv Array of arguments provided
  */
 void parse_command_line(int argc, char* argv[], config_t* config);
+
+/**
+ * @brief Write image buffer to ppm file
+ * 
+ * @param image_buffer image buffer 
+ * @param scene scene config containing image size and output filename
+ */
+void write_buffer_to_file(colour_t* image_buffer, scene_t scene);
 
 #endif
