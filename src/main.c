@@ -16,26 +16,26 @@
 #include "sphere.h"
 #include "utils.h"
 
-scene_t g_scene;
-
-void init(int argc, char* argv[], config_t* config);
-void clean_up();
+void init(int argc, char* argv[], config_t* config, scene_t* scene);
+void clean_up(scene_t* scene);
 
 int main(int argc, char* argv[]) {
   config_t config;
+  scene_t scene;
+
   // INIT
-  init(argc, argv, &config);
+  init(argc, argv, &config, &scene);
 
   // RUN
   // render(&scene);
 
   // CLEAN UP
-  clean_up();
+  clean_up(&scene);
 
   return 0;
 }
 
-void init(int argc, char* argv[], config_t* config) {
+void init(int argc, char* argv[], config_t* config, scene_t* scene) {
   parse_command_line(argc, argv, config);
 
   FILE* config_file = fopen(config->config_filename, "r");
@@ -44,7 +44,7 @@ void init(int argc, char* argv[], config_t* config) {
     exit(1);
   }
 
-  parse_config(config_file, &g_scene);
+  parse_config(config_file, scene);
   print_success("Parsed config file");
 
   if (fclose(config_file)) {
@@ -56,8 +56,8 @@ void init(int argc, char* argv[], config_t* config) {
   }
 }
 
-void clean_up() {
-  scene_cleanup(&g_scene);
+void clean_up(scene_t* scene) {
+  scene_cleanup(scene);
   // clean up SDL
   print_success("Completed clean up");
 }
