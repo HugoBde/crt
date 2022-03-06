@@ -37,7 +37,7 @@ void parse_command_line(int argc, char* argv[], config_t* config) {
     exit(EINVAL);
   }
 
-  config->config_filename = argv[1];
+  config->config_filename   = argv[1];
   config->live_rendering_on = false;
 
   if (argc == 3) {
@@ -54,8 +54,8 @@ void parse_command_line(int argc, char* argv[], config_t* config) {
 
 /**
  * @brief Write image buffer to ppm file
- * 
- * @param buffer image buffer 
+ *
+ * @param buffer image buffer
  * @param scene scene config containing image size and output filename
  */
 void write_buffer_to_file(colour_t* image_buffer, scene_t scene) {
@@ -71,7 +71,7 @@ void write_buffer_to_file(colour_t* image_buffer, scene_t scene) {
   // <max value for colour>
   fprintf(output_file, "P6\n%d %d\n255\n", scene.width, scene.height);
 
-  char* write_buffer = (char*) malloc(sizeof(char) * scene.width * scene.height * 3);
+  char* write_buffer = (char*)malloc(sizeof(char) * scene.width * scene.height * 3);
   for (int i = 0; i < scene.height; i++) {
     int height_offset = i * scene.width;
     for (int j = 0; j < scene.width; j++) {
@@ -82,8 +82,6 @@ void write_buffer_to_file(colour_t* image_buffer, scene_t scene) {
   }
   fwrite(write_buffer, sizeof(char), scene.height * scene.width * 3, output_file);
   free(write_buffer);
-
-
 
   fclose(output_file);
 }

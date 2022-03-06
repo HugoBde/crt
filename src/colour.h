@@ -9,6 +9,4 @@ typedef struct {
   uint8_t b;
 } colour_t;
 
-
-
 #endif

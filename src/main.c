@@ -68,42 +68,41 @@ void clean_up(scene_t* scene) {
 }
 
 void render(scene_t* scene) {
-  colour_t* image_buffer = (colour_t*) malloc(sizeof(colour_t) * scene->width * scene->height);
+  colour_t* image_buffer = (colour_t*)malloc(sizeof(colour_t) * scene->width * scene->height);
   if (image_buffer == NULL) {
     print_error("failed to allocate memory for image buffer");
     exit(1);
   }
 
   const vector_t origin = {
-    .x = 0.0f,
-    .y = 0.0f,
-    .z = 0.0f
+      .x = 0.0f,
+      .y = 0.0f,
+      .z = 0.0f,
   };
 
-  float FOV = M_PI_2;
-  float vertical_FOV = M_PI_2 * (float) scene->height / (float) scene->width;
+  float FOV          = M_PI_2;
+  float vertical_FOV = M_PI_2 * (float)scene->height / (float)scene->width;
 
-  for(int y = 0; y < scene->height; y++) {
-    float ray_y_coord = -(2.0f * ((float) y / (float) scene->height - 0.5f) * tanf(vertical_FOV / 2.0f ));
-    for(int x = 0; x < scene->width; x++) {
-      float ray_x_coord = 2.0f * ((float) x / (float) scene->width - 0.5f) * tanf(FOV / 2.0f);
-      vector_t ray = {
-        .x = ray_x_coord,
-        .y = ray_y_coord,
-        .z = -1.0f
+  for (int y = 0; y < scene->height; y++) {
+    float ray_y_coord = -(2.0f * ((float)y / (float)scene->height - 0.5f) * tanf(vertical_FOV / 2.0f));
+    for (int x = 0; x < scene->width; x++) {
+      float ray_x_coord = 2.0f * ((float)x / (float)scene->width - 0.5f) * tanf(FOV / 2.0f);
+      vector_t ray      = {
+               .x = ray_x_coord,
+               .y = ray_y_coord,
+               .z = -1.0f,
       };
-      
+
       hit_record_t closest_hr = {
-        .hit = false,
-        .colour = {
-          .r = 128,
-          .g = 128,
-          .b = 128
-        }
+          .hit    = false,
+          .colour = {
+              .r = 128,
+              .g = 128,
+              .b = 128,
+          },
       };
 
-
-      for(int i = 0; i < scene->nb_sphere; i++) {
+      for (int i = 0; i < scene->nb_sphere; i++) {
         hit_record_t hr = check_hit(scene->spheres + i, origin, ray);
         if (hr.hit) {
           if (!closest_hr.hit || magnitude(sub(hr.pos, origin)) < magnitude(sub(closest_hr.pos, origin))) {

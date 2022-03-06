@@ -17,17 +17,17 @@ typedef struct {
 
 /**
  * @brief Create a new sphere
- * 
+ *
  * @param _radius Sphere radius
  * @param _center Sphere center
  * @param _colour Sphere colour
- * @return sphere_t Created sphere 
+ * @return sphere_t Created sphere
  */
 sphere_t new_sphere(float _radius, vector_t _center, colour_t _colour);
 
 /**
  * @brief Returns a hit record of a ray and a sphere
- * 
+ *
  * @param sphere Sphere
  * @param origin Ray origin
  * @param direction Ray direction (does not need to be normalized)

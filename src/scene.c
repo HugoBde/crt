@@ -20,7 +20,7 @@ void parse_config(FILE* config_file, scene_t* scene) {
   fscanf(config_file, "%d", &scene->width);
   fscanf(config_file, "%d", &scene->height);
 
-  scene->buffer = (colour_t*) malloc(sizeof(colour_t) * scene->width * scene->height);
+  scene->buffer = (colour_t*)malloc(sizeof(colour_t) * scene->width * scene->height);
 
   if (scene->buffer == NULL) {
     print_error("failed to allocate memory for image buffer");
@@ -30,7 +30,7 @@ void parse_config(FILE* config_file, scene_t* scene) {
   fscanf(config_file, "%d", &scene->nb_sphere);
 
   scene->spheres = (sphere_t*)malloc(sizeof(sphere_t) * scene->nb_sphere);
-  
+
   if (scene->spheres == NULL) {
     print_error("failed to allocate memory for the scene");
     errno = 1;
