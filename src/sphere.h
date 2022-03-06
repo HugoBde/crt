@@ -33,6 +33,6 @@ sphere_t new_sphere(float _radius, vector_t _center, colour_t _colour);
  * @param direction Ray direction (does not need to be normalized)
  * @return hit_record_t Resulting hit record (can be invalid aka hit_record.hit = false)
  */
-hit_record_t check_hit(sphere_t sphere, vector_t origin, vector_t direction);
+hit_record_t check_hit(sphere_t* sphere, vector_t origin, vector_t direction);
 
 #endif
