@@ -49,8 +49,12 @@ void init(int argc, char* argv[], config_t* config, scene_t* scene) {
     exit(1);
   }
 
-  parse_config(config_file, scene);
-  print_success("Parsed config file");
+  if (parse_config(config_file, scene) != 0) {
+    print_error("aborting");
+    exit(1);
+  } else {
+    print_success("successfully parsed config file");
+  }
 
   if (fclose(config_file)) {
     print_error("failed to close config file");

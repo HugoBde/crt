@@ -24,8 +24,9 @@ typedef struct {
  *
  * @param config_file Pointer to opened config file to read
  * @param scene Pointer to scene_t struct to initialise
+ * @return 0 on successful parse, anything else in case of an error
  */
-void parse_config(FILE* config_file, scene_t* config);
+int parse_config(FILE* config_file, scene_t* config);
 
 /**
  * @brief Cleans up dynamically allocated memory

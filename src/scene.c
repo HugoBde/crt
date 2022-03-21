@@ -1,6 +1,5 @@
 #include "scene.h"
 
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -15,7 +14,7 @@
  * @param config_file Pointer to opened config file to read
  * @param scene Pointer to scene_t struct to initialise
  */
-void parse_config(FILE* config_file, scene_t* scene) {
+int parse_config(FILE* config_file, scene_t* scene) {
   fscanf(config_file, "%s", scene->filename);
 
   fscanf(config_file, "%d", &scene->width);
@@ -25,8 +24,7 @@ void parse_config(FILE* config_file, scene_t* scene) {
 
   if (scene->buffer == NULL) {
     print_error("failed to allocate memory for image buffer");
-    errno = 1;
-    return;
+    return 1;
   }
 
   fscanf(config_file, "%d", &scene->nb_hittables);
@@ -35,27 +33,26 @@ void parse_config(FILE* config_file, scene_t* scene) {
 
   if (scene->hittables == NULL) {
     print_error("failed to allocate memory for the scene");
-    errno = 1;
-    return;
+    return 1;
   }
 
   for (int i = 0; i < scene->nb_hittables; i++) {
     hittable_t* curr = scene->hittables + i;
-    char type;
-    fscanf(config_file, "%c", &type);
+    hittable_type type;
+    fscanf(config_file, "%d", &type);
+    printf("type: %d", type);
     switch (type) {
-      curr->type = TRIANGLE;
-      fscanf(config_file, "%f %f %f %f %f %f %f %f %f %d %d %d", &curr->obj.triangle.a.x, &curr->obj.triangle.a.y, &curr->obj.triangle.a.z, &curr->obj.triangle.b.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, &curr->obj.triangle.c.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, (int*)&curr->obj.triangle.colour.r, (int*)&curr->obj.triangle.colour.g, (int*)&curr->obj.triangle.colour.b);
-      break;
-      case 'S':
+      case TRIANGLE:
+        curr->type = TRIANGLE;
+        fscanf(config_file, "%f %f %f %f %f %f %f %f %f %d %d %d", &curr->obj.triangle.a.x, &curr->obj.triangle.a.y, &curr->obj.triangle.a.z, &curr->obj.triangle.b.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, &curr->obj.triangle.c.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, (int*)&curr->obj.triangle.colour.r, (int*)&curr->obj.triangle.colour.g, (int*)&curr->obj.triangle.colour.b);
+        break;
+      case SPHERE:
         curr->type = SPHERE;
         fscanf(config_file, "%f %f %f %f %d %d %d", &curr->obj.sphere.radius, &curr->obj.sphere.center.x, &curr->obj.sphere.center.y, &curr->obj.sphere.center.z, (int*)&curr->obj.sphere.colour.r, (int*)&curr->obj.sphere.colour.g, (int*)&curr->obj.sphere.colour.b);
         break;
-      case 'T':
       default:
         print_error("unknow object type");
-        errno = 1;
-        return;
+        return 1;
     }
   }
 
@@ -71,6 +68,7 @@ void parse_config(FILE* config_file, scene_t* scene) {
         break;
     }
   }
+  return 0;
 }
 
 /**

@@ -75,8 +75,8 @@ hit_record_t check_hit_sphere(sphere_t* sphere, vector_t origin, vector_t direct
  *
  */
 typedef enum {
-  TRIANGLE,
-  SPHERE
+  TRIANGLE = 0,
+  SPHERE   = 1
 } hittable_type;
 
 /**
