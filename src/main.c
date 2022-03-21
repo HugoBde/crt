@@ -15,8 +15,8 @@
 
 #include "colour.h"
 #include "hit_record.h"
+#include "hittable.h"
 #include "scene.h"
-#include "sphere.h"
 #include "utils.h"
 #include "vector.h"
 
@@ -102,8 +102,8 @@ void render(scene_t* scene) {
           },
       };
 
-      for (int i = 0; i < scene->nb_sphere; i++) {
-        hit_record_t hr = check_hit(scene->spheres + i, origin, ray);
+      for (int i = 0; i < scene->nb_hittables; i++) {
+        hit_record_t hr = check_hit(scene->hittables[i], origin, ray);
         if (hr.hit) {
           if (!closest_hr.hit || magnitude(sub(hr.pos, origin)) < magnitude(sub(closest_hr.pos, origin))) {
             closest_hr = hr;

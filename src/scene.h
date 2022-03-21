@@ -4,15 +4,15 @@
 #include <stdio.h>
 
 #include "colour.h"
-#include "sphere.h"
+#include "hittable.h"
 
 /**
  * @brief Stores all data related to the scene to render
  *
  */
 typedef struct {
-  int nb_sphere;
-  sphere_t* spheres;
+  int nb_hittables;
+  hittable_t* hittables;
   int width;
   int height;
   char filename[128];

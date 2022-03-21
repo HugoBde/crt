@@ -6,6 +6,8 @@
       "-Wall",
       "-Wextra",
       "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-unused-variable",
       "-o",
       "obj/main.o",
       "src/main.c"
@@ -13,5 +15,73 @@
     "directory": "/home/bde/Documents/Programming/c/ray_tracer",
     "file": "/home/bde/Documents/Programming/c/ray_tracer/src/main.c",
     "output": "/home/bde/Documents/Programming/c/ray_tracer/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-unused-variable",
+      "-o",
+      "obj/hittable.o",
+      "src/hittable.c"
+    ],
+    "directory": "/home/bde/Documents/Programming/c/ray_tracer",
+    "file": "/home/bde/Documents/Programming/c/ray_tracer/src/hittable.c",
+    "output": "/home/bde/Documents/Programming/c/ray_tracer/obj/hittable.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-unused-variable",
+      "-o",
+      "obj/scene.o",
+      "src/scene.c"
+    ],
+    "directory": "/home/bde/Documents/Programming/c/ray_tracer",
+    "file": "/home/bde/Documents/Programming/c/ray_tracer/src/scene.c",
+    "output": "/home/bde/Documents/Programming/c/ray_tracer/obj/scene.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-unused-variable",
+      "-o",
+      "obj/utils.o",
+      "src/utils.c"
+    ],
+    "directory": "/home/bde/Documents/Programming/c/ray_tracer",
+    "file": "/home/bde/Documents/Programming/c/ray_tracer/src/utils.c",
+    "output": "/home/bde/Documents/Programming/c/ray_tracer/obj/utils.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wno-unused-parameter",
+      "-Wno-unused-variable",
+      "-o",
+      "obj/vector.o",
+      "src/vector.c"
+    ],
+    "directory": "/home/bde/Documents/Programming/c/ray_tracer",
+    "file": "/home/bde/Documents/Programming/c/ray_tracer/src/vector.c",
+    "output": "/home/bde/Documents/Programming/c/ray_tracer/obj/vector.o"
   }
 ]
