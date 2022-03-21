@@ -36,7 +36,7 @@ triangle_t new_triangle(vector_t _a, vector_t _b, vector_t _c, colour_t _colour)
  * @param direction Ray direction
  * @return hit_record_t Resulting hit record (if hit_record.hit == false, then other data members are invalid)
  */
-hit_record_t check_hit_triangle(triangle_t* triangle, vector_t origin, vector_t direction);
+hit_record_t check_hit_triangle(triangle_t triangle, vector_t origin, vector_t direction);
 
 /**
  * @brief Represents a single sphere
@@ -66,7 +66,7 @@ sphere_t new_sphere(float _radius, vector_t _center, colour_t _colour);
  * @param direction Ray direction (does not need to be normalized)
  * @return hit_record_t Resulting hit record (if hit_record.hit == false, then other data members are invalid)
  */
-hit_record_t check_hit_sphere(sphere_t* sphere, vector_t origin, vector_t direction);
+hit_record_t check_hit_sphere(sphere_t sphere, vector_t origin, vector_t direction);
 
 /**
  * @brief Types of possible hittable objects.

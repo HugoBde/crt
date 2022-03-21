@@ -40,11 +40,10 @@ int parse_config(FILE* config_file, scene_t* scene) {
     hittable_t* curr = scene->hittables + i;
     hittable_type type;
     fscanf(config_file, "%d", &type);
-    printf("type: %d", type);
     switch (type) {
       case TRIANGLE:
         curr->type = TRIANGLE;
-        fscanf(config_file, "%f %f %f %f %f %f %f %f %f %d %d %d", &curr->obj.triangle.a.x, &curr->obj.triangle.a.y, &curr->obj.triangle.a.z, &curr->obj.triangle.b.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, &curr->obj.triangle.c.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, (int*)&curr->obj.triangle.colour.r, (int*)&curr->obj.triangle.colour.g, (int*)&curr->obj.triangle.colour.b);
+        fscanf(config_file, "%f %f %f %f %f %f %f %f %f %d %d %d", &curr->obj.triangle.a.x, &curr->obj.triangle.a.y, &curr->obj.triangle.a.z, &curr->obj.triangle.b.x, &curr->obj.triangle.b.y, &curr->obj.triangle.b.z, &curr->obj.triangle.c.x, &curr->obj.triangle.c.y, &curr->obj.triangle.c.z, (int*)&curr->obj.triangle.colour.r, (int*)&curr->obj.triangle.colour.g, (int*)&curr->obj.triangle.colour.b);
         break;
       case SPHERE:
         curr->type = SPHERE;

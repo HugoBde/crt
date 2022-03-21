@@ -1,6 +1,8 @@
 #include "utils.h"
 
 #include <errno.h>
+#include "math.h"
+#include "float.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -84,4 +86,21 @@ void write_buffer_to_file(colour_t* image_buffer, scene_t scene) {
   free(write_buffer);
 
   fclose(output_file);
+}
+
+/**
+ * @brief Compares two double numbers
+ * 
+ * @param a 
+ * @param b 
+ * @return int 0 if both numbers are equal, -1 if a is smaller than b, 1 if a is greater than b
+ */
+int comp_double(double a, double b) {
+  if (fabs(a - b) < DBL_EPSILON) {
+    return 0;
+  } else if (a < b) {
+    return -1;
+  } else {
+    return 1;
+  }
 }

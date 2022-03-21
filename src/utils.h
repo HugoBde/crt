@@ -46,4 +46,13 @@ void parse_command_line(int argc, char* argv[], config_t* config);
  */
 void write_buffer_to_file(colour_t* image_buffer, scene_t scene);
 
+/**
+ * @brief Compares two double numbers
+ * 
+ * @param a 
+ * @param b 
+ * @return int 0 if both numbers are equal, -1 if a is smaller than b, 1 if a is greater than b
+ */
+int comp_double(double a, double b);
+
 #endif

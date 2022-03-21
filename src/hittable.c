@@ -1,6 +1,8 @@
 #include "hittable.h"
 
 #include <math.h>
+#include "utils.h"
+#include "vector.h"
 
 /**
  * @brief Create a new triangle
@@ -27,9 +29,62 @@ triangle_t new_triangle(vector_t _a, vector_t _b, vector_t _c, colour_t _colour)
  * @param direction Ray direction
  * @return hit_record_t Resulting hit record (if hit_record.hit == false, then other data members are invalid)
  */
-hit_record_t check_hit_triangle(triangle_t* triangle, vector_t origin, vector_t direction) {
+hit_record_t check_hit_triangle(triangle_t triangle, vector_t origin, vector_t direction) {
   hit_record_t out;
   out.hit = false;
+  vector_t ab = sub(triangle.b, triangle.a);
+  vector_t ac = sub(triangle.c, triangle.a);
+  vector_t bc = sub(triangle.c, triangle.b);
+
+  vector_t normal = cross_product(ab, ac);
+
+  // if the surface normal is orthogonal to the ray then the ray is parallel to the triangle
+  if (comp_double(dot_product(normal, direction), 0.0) == 0) {
+    out.hit = false;
+    return out;
+  }
+
+  double d = -dot_product(normal, triangle.a);
+
+  double t = -(dot_product(normal, origin) + d) / dot_product(normal, direction);
+
+  if (t < 0) {
+    out.hit = false;
+    return out;
+  }
+
+  // printf("triangle\n");
+  vector_t p = add(origin, scalar_multiply(direction, t));
+  vector_t c;
+
+  // edge AB
+  vector_t ap = sub(p, triangle.a);
+  c = cross_product(ab, ap);
+  if (dot_product(normal, c) < 0) {
+    out.hit = false;
+    return out;
+  }
+
+  // edge BC
+  vector_t bp = sub(p, triangle.b);
+  c = cross_product(bc, bp);
+  if (dot_product(normal, c) < 0) {
+    out.hit = false;
+    return out;
+  }
+  
+  // edge CA
+  vector_t cp = sub(p, triangle.c);
+  c = cross_product(scalar_multiply(ac, -1), cp);
+  if (dot_product(normal, c) < 0) {
+    out.hit = false;
+    return out;
+  }
+
+  out.hit = true;
+  out.colour = triangle.colour;
+  out.pos = p;
+
   return out;
 }
 
@@ -57,21 +112,21 @@ sphere_t new_sphere(float _radius, vector_t _center, colour_t _colour) {
  * @param direction Ray direction (does not need to be normalized)
  * @return hit_record_t Resulting hit record (can be invalid: hit_record.hit = false)
  */
-hit_record_t check_hit_sphere(sphere_t* sphere, vector_t origin, vector_t direction) {
+hit_record_t check_hit_sphere(sphere_t sphere, vector_t origin, vector_t direction) {
   hit_record_t out;
 
   normalize(&direction);
-  vector_t oc                = sub(sphere->center, origin);
+  vector_t oc                = sub(sphere.center, origin);
   float projected_distance   = dot_product(oc, direction);
   vector_t projected_vector  = scalar_multiply(direction, projected_distance);
-  vector_t projecting_vector = sub(sphere->center, projected_vector);
+  vector_t projecting_vector = sub(sphere.center, projected_vector);
   float squared_vector       = dot_product(projecting_vector, projecting_vector);
-  if (squared_vector > powf(sphere->radius, 2)) {
+  if (squared_vector > powf(sphere.radius, 2)) {
     out.hit = false;
     return out;
   } else {
     out.hit      = true;
-    float offset = sqrtf(powf(sphere->radius, 2) - squared_vector);
+    float offset = sqrtf(powf(sphere.radius, 2) - squared_vector);
     if (projected_distance - offset < 0) {
       if (projected_distance + offset < 0) {
         out.hit = false;
@@ -82,10 +137,10 @@ hit_record_t check_hit_sphere(sphere_t* sphere, vector_t origin, vector_t direct
     } else {
       out.pos = add(origin, scalar_multiply(direction, projected_distance - offset));
     }
-    vector_t normal = sub(out.pos, sphere->center);
+    vector_t normal = sub(out.pos, sphere.center);
     normalize(&normal);
     float shading_coefficient = (normal.y + 1.0f) / 2.0f;
-    out.colour                = sphere->colour;
+    out.colour                = sphere.colour;
     out.colour.r *= shading_coefficient;
     out.colour.g *= shading_coefficient;
     out.colour.b *= shading_coefficient;
@@ -106,10 +161,10 @@ hit_record_t check_hit(hittable_t hittable, vector_t origin, vector_t direction)
   hit_record_t out;
   switch (hittable.type) {
     case TRIANGLE:
-      out = check_hit_triangle(&hittable.obj.triangle, origin, direction);
+      out = check_hit_triangle(hittable.obj.triangle, origin, direction);
       break;
     case SPHERE:
-      out = check_hit_sphere(&hittable.obj.sphere, origin, direction);
+      out = check_hit_sphere(hittable.obj.sphere, origin, direction);
       break;
   }
   return out;
