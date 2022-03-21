@@ -4,25 +4,25 @@
 
 /**
  * @brief Create a new triangle
- * 
+ *
  * @param _a Vertex A
  * @param _b Vertex B
  * @param _c Vertex C
- * @return triangle_t Created triangle 
+ * @return triangle_t Created triangle
  */
 triangle_t new_triangle(vector_t _a, vector_t _b, vector_t _c, colour_t _colour) {
   triangle_t out;
-  out.a = _a;
-  out.b = _b;
-  out.c = _c;
+  out.a      = _a;
+  out.b      = _b;
+  out.c      = _c;
   out.colour = _colour;
   return out;
 }
 
 /**
  * @brief Returns a hit record of a ray and a sphere
- * 
- * @param triangle Triangle 
+ *
+ * @param triangle Triangle
  * @param origin Ray origin
  * @param direction Ray direction
  * @return hit_record_t Resulting hit record (if hit_record.hit == false, then other data members are invalid)
@@ -100,7 +100,7 @@ hit_record_t check_hit_sphere(sphere_t* sphere, vector_t origin, vector_t direct
  * @param hittable hittable object to unwrap to check for hit with the ray
  * @param origin ray origin
  * @param direction ray direction
- * @return hit_record_t 
+ * @return hit_record_t
  */
 hit_record_t check_hit(hittable_t hittable, vector_t origin, vector_t direction) {
   hit_record_t out;
